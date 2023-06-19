@@ -30,6 +30,11 @@ class TimerAPI extends PluginBase {
     public static function wait(callable $callback, int $duration): void {
         timer::getInstance()->getScheduler()->scheduleDelayedTask(new ClosureTask($callback), $duration * 20);
     }
+    // TODO:
+    # scheduleTask 
+    # scheduleRepeatingTask
+    # scheduleDelayedRepeatingTask 
+    # Cancel Task!
 
     /**
      * Gets the instance of the TimerAPI plugin.
