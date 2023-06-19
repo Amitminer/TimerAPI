@@ -1,2 +1,2 @@
 # TimerAPI
-tried using schedule tasks? them try TimerAPI :)
+tried using schedule tasks? then try TimerAPI :)
