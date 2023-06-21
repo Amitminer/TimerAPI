@@ -11,7 +11,7 @@ TimerAPI is a plugin that allows you to schedule delayed tasks and repeating tas
 
 ### Scheduling Delayed Tasks
 
-To schedule a task to be executed after a specified delay, use the `scheduleDelayedTask` method:
+To schedule a task to be executed after a specified delay, use the `wait` method:
 
 ```php
 use TimerAPI\TimerAPI;
