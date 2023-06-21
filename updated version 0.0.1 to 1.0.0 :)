@@ -1,6 +1,6 @@
 ---
 name: TimerAPI
-version: 0.0.1
+version: 1.0.0
 main: TimerAPI\TimerAPI
 author: AmitxD
 api: 5.0.0
