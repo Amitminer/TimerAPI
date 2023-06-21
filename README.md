@@ -2,7 +2,7 @@
 
 TimerAPI is a plugin that allows you to schedule delayed tasks and repeating tasks in your PocketMine-MP plugins. It provides a convenient way to execute commands or code snippets after a specified delay or at regular intervals.
 ## TODO
-- [ ] Add cooldown API!
+- [X] Add cooldown API!
 - [ ] Adding `TimerAPI::stopWorldTime($world)` method.
 - [ ] Adding `TimerAPI::startWorldTime($world)` method.
 - [ ] Adding `TimerAPI::stopPlayer($player)` method.
@@ -17,7 +17,7 @@ TimerAPI is a plugin that allows you to schedule delayed tasks and repeating tas
 - Schedule repeating tasks with `TimerAPI::repeat`.
 - Schedule delayed repeating tasks with `TimerAPI::repeatWait`.
 - Cancel all scheduled tasks with `TimerAPI::killall`.
-
+- Manage cooldowns for players with the CooldownAPI. 
 ## Usage
 
 ### Scheduling Delayed Tasks
@@ -73,6 +73,18 @@ TimerAPI::killall();
 ```
 
 This will cancel all tasks that have been scheduled using TimerAPI.
+## CooldownAPI
+TimerAPI::startCooldown(Player $player, int $duration): Start a cooldown for a player with the specified duration.
+TimerAPI::hasCooldown($player): Check if a player has an active cooldown.
+TimerAPI::getCooldownTimeRemaining($player): Get the remaining time of a player's cooldown.
+```php
+use TimerAPI\TimerAPI;
+
+TimerAPI::startCooldown($player, $duration);
+TimerAPI::hasCoolDown($player);
+TimerAPI::getCooldownTimeRemaining($player)
+
+```
 
 ## Example
 
@@ -94,6 +106,10 @@ TimerAPI::repeatWait(function() {
 }, 15, 8);
 
 TimerAPI::killall();
+
+TimerAPI::startCooldown($player, $duration);
+TimerAPI::hasCoolDown($player);
+TimerAPI::getCooldownTimeRemaining($player)
 ```
 
 In the example above, the first task will be executed after a delay of 10 seconds, the second task will be executed every 5 seconds for a total of 10 repetitions, the third task will be executed after a delay of 15 seconds and then repeated 8 times, and finally, all tasks will be cancelled.
