@@ -28,7 +28,7 @@ class TimerAPI extends PluginBase {
      * @param int      $duration The duration to wait in seconds.
      */
     public static function wait(callable $callback, int $duration): void {
-        timer::getInstance()->getScheduler()->scheduleDelayedTask(new ClosureTask($callback), $duration * 20);
+        TimerAPI::getInstance()->getScheduler()->scheduleDelayedTask(new ClosureTask($callback), $duration * 20);
     }
     // TODO:
     # scheduleTask 
