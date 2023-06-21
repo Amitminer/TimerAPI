@@ -70,6 +70,39 @@ class TimerAPI extends PluginBase {
         // Cancel all tasks
         $scheduler->cancelAllTasks();
     }
+    
+    /**
+    * Starts a cooldown for the specified player.
+    *
+    * @param Player $player   The player to start the cooldown for.
+    * @param int    $duration The duration of the cooldown in seconds.
+    */
+    private function startCooldown(Player $player, int $duration): void {
+        $this->cooldowns[$player->getName()] = time() + $duration;
+    }
+
+    /**
+    * Checks if the specified player has an active cooldown.
+    *
+    * @param Player $player The player to check for cooldown.
+    *
+    * @return bool True if the player has an active cooldown, false otherwise.
+    */
+    private function hasCooldown(Player $player): bool {
+        return isset($this->cooldowns[$player->getName()]) && time() < $this->cooldowns[$player->getName()];
+    }
+
+    /**
+    * Gets the remaining time in seconds for the cooldown of the specified player.
+    *
+    * @param Player $player The player to get the cooldown time for.
+    *
+    * @return int The remaining time in seconds for the cooldown.
+    */
+    private function getCooldownTimeRemaining(Player $player): int {
+        $timeRemaining = $this->cooldowns[$player->getName()] - time();
+        return max(0, $timeRemaining);
+    }
 
     /**
     * Gets the instance of the TimerAPI plugin.
