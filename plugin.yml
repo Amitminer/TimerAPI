@@ -1,6 +1,6 @@
 ---
 name: TimerAPI
-version: 1.0.0
+version: 1.5.0 #is_beta(true);
 main: TimerAPI\TimerAPI
 author: AmitxD
 api: 5.0.0
