@@ -1,7 +1,19 @@
 # TimerAPI
 
 TimerAPI is a plugin that allows you to schedule delayed tasks and repeating tasks in your PocketMine-MP plugins. It provides a convenient way to execute commands or code snippets after a specified delay or at regular intervals.
-
+## TODO
+- [ ] Add cooldown API!
+- [ ] Add `TimerAPI::stopWorldTime($world)` method.
+- [ ] Add `TimerAPI::startWorldTime($world)` method.
+- [ ] Add `TimerAPI::stopPlayer($player)` method.
+- [ ] Add `TimerAPI::startPlayer($player)` method.
+- [ ] Add `TimerAPI::setPlayerInvincibility($player, $duration)` method.
+- [ ] Add `TimerAPI::setPlayerWalkSpeed($player, $speed)` method.
+- [ ] Add `TimerAPI::setPlayerFlySpeed($player, $speed)` method.
+- [ ] Add `TimerAPI::broadcastMessage($message, $delay)` method.
+- [ ] Add `TimerAPI::executeCommand($command, $delay)` method.
+- [ ] Add `TimerAPI::teleportPlayer($player, $target, $delay)` method.
+- [ ] Update documentation
 ## Features
 
 - Schedule delayed tasks with `TimerAPI::wait`.
