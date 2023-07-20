@@ -6,11 +6,13 @@ namespace TimerAPI;
 
 use pocketmine\plugin\PluginBase;
 use pocketmine\scheduler\ClosureTask;
+use pocketmine\command\ConsoleCommandSender;
 use pocketmine\Server;
 
 class TimerAPI extends PluginBase {
 
     protected static $instance;
+    private array $cooldowns = [];
 
     public function onLoad(): void {
         self::$instance = $this;
@@ -70,14 +72,39 @@ class TimerAPI extends PluginBase {
         // Cancel all tasks
         $scheduler->cancelAllTasks();
     }
-    
+
+    /**
+    * Schedules a task to be executed when a specified condition is met.
+    *
+    * @param callable $callback The callback function to execute.
+    * @param callable $conditionCheck The condition check function. Should return true to execute the task.
+    */
+    /**
+    * Schedules a task to be executed when a specified condition is met.
+    *
+    * @param callable $callback The callback function to execute.
+    * @param callable $conditionCheck The condition check function. Should return true to execute the task.
+    */
+    public static function conditionalTask(callable $callback, callable $conditionCheck): void {
+        $task = new ClosureTask(function (int $currentTick) use ($callback, $conditionCheck) {
+            if (call_user_func($conditionCheck)) {
+                call_user_func($callback, $currentTick);
+            }
+        });
+
+        // Schedule the ClosureTask as a delayed repeating task with a delay of 1 tick (immediate execution) and an interval of 1 tick.
+        self::getInstance()->getScheduler()->scheduleDelayedRepeatingTask($task,
+            1,
+            1);
+    }
     /**
     * Starts a cooldown for the specified player.
     *
     * @param Player $player   The player to start the cooldown for.
     * @param int    $duration The duration of the cooldown in seconds.
     */
-    private function startCooldown(Player $player, int $duration): void {
+    private function startCooldown(Player $player,
+        int $duration): void {
         $this->cooldowns[$player->getName()] = time() + $duration;
     }
 
@@ -101,7 +128,89 @@ class TimerAPI extends PluginBase {
     */
     private function getCooldownTimeRemaining(Player $player): int {
         $timeRemaining = $this->cooldowns[$player->getName()] - time();
-        return max(0, $timeRemaining);
+        return max(0,
+            $timeRemaining);
+    }
+    /**
+    * Stops the time in the specified world.
+    *
+    * @param string $world The name of the world where the time should be stopped.
+    */
+    public static function stopWorldTime(string $world): void {
+        $worldManager = Server::getInstance()->getWorldManager();
+        $world = $worldManager->getWorldByName($world);
+
+        if ($world !== null) {
+            $world->stopTime();
+        }
+    }
+    /**
+    * Starts the time in the specified world.
+    *
+    * @param string $world The name of the world where the time should be started.
+    */
+    public static function startWorldTime(string $world): void {
+        $worldManager = Server::getInstance()->getWorldManager();
+        $world = $worldManager->getWorldByName($world);
+
+        if ($world !== null) {
+            $world->startTime();
+        }
+    }
+    /**
+    * Stops the specified player from moving and interacting.
+    *
+    * @param Player $player The player to stop.
+    */
+    public static function stopPlayer(Player $player): void {
+        $player->setNoClientPredictions(true);
+    }
+    /**
+    * Allows the specified player to move and interact again.
+    *
+    * @param Player $player The player to start.
+    */
+    public static function startPlayer(Player $player): void {
+        $player->setNoClientPredictions(false);
+    }
+
+    /**
+    * Sets the specified player invincible for a given duration.
+    *
+    * @param Player $player The player to make invincible.
+    * @param int $duration The duration of invincibility in seconds.
+    */
+    public static function setPlayerInvincibility(Player $player, int $duration): void {
+        $originalHealth = $player->getHealth();
+        $player->setHealth($player->getMaxHealth()); // Set health to maximum to make the player invincible.
+
+        TimerAPI::wait(function () use ($player, $originalHealth) {
+            $player->setHealth($originalHealth); // Restore the player's original health after the duration.
+        }, $duration);
+    }
+
+    /**
+    * Broadcasts a message to all players with a specified delay.
+    *
+    * @param string $message The message to broadcast.
+    * @param int $delay The delay in seconds before broadcasting the message.
+    */
+    public static function broadcastMessage(string $message, int $delay): void {
+        TimerAPI::wait(function () use ($message) {
+            Server::getInstance()->broadcastMessage($message);
+        }, $delay);
+    }
+
+    /**
+    * Executes a server command with a specified delay.
+    *
+    * @param string $command The command to execute.
+    * @param int $delay The delay in seconds before executing the command.
+    */
+    public static function executeCommand(string $command, int $delay): void {
+        TimerAPI::wait(function () use ($command) {
+            Server::getInstance()->dispatchCommand(new ConsoleCommandSender(), $command);
+        }, $delay);
     }
 
     /**
