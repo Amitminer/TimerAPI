@@ -39,9 +39,8 @@ class TimerAPI extends PluginBase {
     *
     * @param callable $callback     The callback function to execute.
     * @param int      $interval     The interval between each repetition in seconds.
-    * @param int      $repetitions  The number of times the task should be repeated.
     */
-    public static function repeat(callable $callback, int $interval, int $repetitions): void {
+    public static function repeat(callable $callback, int $interval): void {
         $task = new ClosureTask($callback);
         $scheduler = TimerAPI::getInstance()->getScheduler();
         $scheduler->scheduleRepeatingTask($task, $interval * 20, $repetitions);
