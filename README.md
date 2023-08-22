@@ -41,10 +41,10 @@ use TimerAPI\TimerAPI;
 
 TimerAPI::repeat(function() {
     // Code to be executed repeatedly
-}, $interval, $repetitions);
+}, $interval);
 ```
 
-Replace `$interval` with the desired interval in seconds and `$repetitions` with the number of times the task should be repeated.
+Replace `$interval` with the desired interval in seconds. task should be repeated.
 
 ### Scheduling Delayed Repeating Tasks
 
