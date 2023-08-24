@@ -9,11 +9,12 @@ TimerAPI is a plugin that allows you to schedule delayed tasks and repeating tas
 - Schedule delayed repeating tasks with `TimerAPI::repeatWait`.
 - Cancel all scheduled tasks with `TimerAPI::killall`.
 - Manage cooldowns for players with the CooldownAPI.
-- Stop and start world time with `TimerAPI::stopWorldTime` and `TimerAPI::startWorldTime` methods.
-- Stop and start player movement and interactions with `TimerAPI::stopPlayer` and `TimerAPI::startPlayer` methods.
-- Set players invincible for a specified duration using `TimerAPI::setPlayerInvincibility` method.
-- Broadcast messages to all players with a specified delay using `TimerAPI::broadcastMessage` method.
-- Execute server commands with a specified delay using `TimerAPI::executeCommand` method.
+- Add Cooldown to player with
+'TimerAPI::startCooldown($player,$duration,$item);'
+- Check Player has Cooldown or not with
+'TimerAPI::hasCooldown($player,$duration,$item);'
+- Get remaining time of cooldown with
+'TimerAPI::getCooldownTimeRemaining($player,$item);'
 
 ## Usage
 ## Usage
@@ -80,66 +81,13 @@ You can manage cooldowns for players using the CooldownAPI. Here's how to start 
 use TimerAPI\TimerAPI;
 
 // Start a cooldown for a player with the specified duration
-TimerAPI::startCooldown($player, $duration);
+TimerAPI::startCooldown($player, $duration,$item);
 
 // Check if a player has an active cooldown
-$hasCooldown = TimerAPI::hasCooldown($player);
+$hasCooldown = TimerAPI::hasCooldown($player,$item);
 
 // Get the remaining time of a player's cooldown
-$remainingTime = TimerAPI::getCooldownTimeRemaining($player);
-```
-
-### Stopping and Starting World Time
-
-You can control the time in a specific world by stopping and starting it with the following methods:
-
-```php
-use TimerAPI\TimerAPI;
-
-// Stop the time in the specified world
-TimerAPI::stopWorldTime($world);
-
-// Start the time in the specified world
-TimerAPI::startWorldTime($world);
-```
-
-### Stopping and Starting Player Interactions
-
-You can prevent a player from moving and interacting and then allow them to do so again using the following methods:
-
-```php
-use TimerAPI\TimerAPI;
-
-// Stop the specified player from moving and interacting
-TimerAPI::stopPlayer($player);
-
-// Allow the specified player to move and interact again
-TimerAPI::startPlayer($player);
-```
-
-### Setting Player Invincibility
-
-You can make a player invincible for a specified duration using the `setPlayerInvincibility` method:
-
-```php
-use TimerAPI\TimerAPI;
-
-// Make the player invincible for a given duration
-TimerAPI::setPlayerInvincibility($player, $duration);
-```
-
-### Broadcasting Messages and Executing Commands
-
-You can broadcast messages to all players with a specified delay and execute server commands after a delay using the following methods:
-
-```php
-use TimerAPI\TimerAPI;
-
-// Broadcast a message to all players with a specified delay
-TimerAPI::broadcastMessage($message, $delay);
-
-// Execute a server command with a specified delay
-TimerAPI::executeCommand($command, $delay);
+$remainingTime = TimerAPI::getCooldownTimeRemaining($player,$item);
 ```
 
 Please note that TimerAPI is an external plugin that you need to install and depend on in your PocketMine-MP project. Refer to the TimerAPI documentation for installation instructions and further details.
