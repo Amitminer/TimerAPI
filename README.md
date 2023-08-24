@@ -10,13 +10,12 @@ TimerAPI is a plugin that allows you to schedule delayed tasks and repeating tas
 - Cancel all scheduled tasks with `TimerAPI::killall`.
 - Manage cooldowns for players with the CooldownAPI.
 - Add Cooldown to player with
-'TimerAPI::startCooldown($player,$duration,$item);'
+`TimerAPI::startCooldown($player,$duration,$item);`
 - Check Player has Cooldown or not with
-'TimerAPI::hasCooldown($player,$duration,$item);'
+`TimerAPI::hasCooldown($player,$duration,$item);`
 - Get remaining time of cooldown with
-'TimerAPI::getCooldownTimeRemaining($player,$item);'
+`TimerAPI::getCooldownTimeRemaining($player,$item);`
 
-## Usage
 ## Usage
 
 ### Scheduling Delayed Tasks
