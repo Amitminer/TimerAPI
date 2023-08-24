@@ -1,6 +1,0 @@
-vendor/
-composer.lock
-dev/
-output/
-.php-cs-fixer.cache
-workflow-remover.py

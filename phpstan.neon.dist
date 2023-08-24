@@ -1,8 +1,0 @@
-parameters:
-    level: 8
-    ignoreErrors:
-        - '#Static access to instance property TimerAPI\\TimerAPI::\$cooldowns#'
-    paths:
-        - src
-    scanDirectories:
-        - vendor
