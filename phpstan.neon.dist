@@ -1,5 +1,5 @@
 parameters:
-    level: 8
+    level: 4
     ignoreErrors:
         - '#Static access to instance property TimerAPI\\TimerAPI::\$cooldowns#'
     paths:
